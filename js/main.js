@@ -3,19 +3,24 @@ const { createApp } = Vue;
 const app = createApp({
   data() {
     return {
-      newMail: "",
+      newMails: [],
     };
   },
   methods: {
-    getMail() {
-      axios
-        .get("https://flynn.boolean.careers/exercises/api/random/mail")
-        .then((email) => {
-          this.newMail = email.data.response;
-        });
-      return this.newMail;
+    getMails() {
+      for (let i = 0; i < 10; i++) {
+        axios
+          .get("https://flynn.boolean.careers/exercises/api/random/mail")
+          .then((email) => {
+            console.log(email.data.response);
+            this.newMails.push(email.data.response);
+          });
+      }
     },
   },
 
-  mounted() {},
+  created() {
+    console.log("asdas");
+    this.getMails();
+  },
 }).mount("#app");
